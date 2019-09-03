@@ -77,6 +77,14 @@ namespace Uvc.Net
             }
         }
 
+        public int GetExtensionUnitValue(byte unit, byte ctrl, IntPtr data, int len, RequestCode req_code){
+            return NativeMethods.uvc_get_ctrl(handle, unit, ctrl, data, len, req_code);
+        }
+
+        public int SetExtensionUnitValue(byte unit, byte ctrl, IntPtr data, int len){
+            return NativeMethods.uvc_set_ctrl(handle, unit, ctrl, data, len);
+        }
+
         public IEnumerable<FormatDescriptor> GetStreamControlFormats()
         {
             var descs = NativeMethods.uvc_get_format_descs(handle);
