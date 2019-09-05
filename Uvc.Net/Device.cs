@@ -13,9 +13,6 @@ namespace Uvc.Net
         readonly ushort vendorId;
         readonly ushort productId;
         readonly ushort complianceLevel;
-        readonly string serialNumber;
-        readonly string manufacturer;
-        readonly string product;
 
         internal Device(UvcDevice device)
         {
@@ -28,9 +25,6 @@ namespace Uvc.Net
                 vendorId = (ushort)Marshal.ReadInt16(descriptor);
                 productId = (ushort)Marshal.ReadInt16(descriptor, 2);
                 complianceLevel = (ushort)Marshal.ReadInt16(descriptor, 4);
-                serialNumber = Marshal.PtrToStringAnsi(Marshal.ReadIntPtr(descriptor, 6));
-                manufacturer = Marshal.PtrToStringAnsi(Marshal.ReadIntPtr(descriptor, 6 + IntPtr.Size));
-                product = Marshal.PtrToStringAnsi(Marshal.ReadIntPtr(descriptor, 6 + IntPtr.Size * 2));
             }
             finally { NativeMethods.uvc_free_device_descriptor(descriptor); }
         }
@@ -48,21 +42,6 @@ namespace Uvc.Net
         public ushort ComplianceLevel
         {
             get { return complianceLevel; }
-        }
-
-        public string SerialNumber
-        {
-            get { return serialNumber; }
-        }
-
-        public string Manufacturer
-        {
-            get { return manufacturer; }
-        }
-
-        public string Product
-        {
-            get { return product; }
         }
 
         public DeviceHandle Open()
